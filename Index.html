@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finsaarthi - Complete Financial Planning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.2/Recharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+<zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cm7c30cs90011144nm8e50tdk'></zapier-interfaces-chatbot-embed>
+    <style>
+        /* CSS Reset & Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #EFF6FF, #F5F3FF);
+            display: flex; /* Use flexbox for overall layout */
+            flex-direction: column; /* Stack header, content, and footer */
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563EB;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4B5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #2563EB;
+        }
+
+        /* Auth Buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #2563EB;
+            border: 1px solid #2563EB;
+        }
+
+        .btn-signup {
+            background: #2563EB;
+            color: white;
+        }
+
+        /* Main Container Styles */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1; /* Allows main content to take up remaining space */
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Modified: No sidebar by default */
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+       /* Bottom Navigation Bar Styles */
+        .bottom-nav {
+            background: white;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.75rem 0;
+            z-index: 100;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #4B5563;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-button:hover,
+        .nav-button.active {
+            color: #2563EB;
+        }
+
+        .nav-button svg {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-button span {
+            font-size: 0.75rem;
+        }
+
+        /* Statistics Cards */
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: #6B7280;
+            font-size: 0.875rem;
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #2563EB, #9333EA);
+            transition: width 0.3s ease;
+        }
+
+        /* Charts */
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 1rem 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 3rem 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #4B5563;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #2563EB;
+        }
+
+        /* View Styles (Hide/Show) */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+
+        /* Responsive Design */
+        @media (min-width: 769px) { /* Styles for larger screens */
+            .grid {
+                grid-template-columns: 1fr 3fr; /* Restore sidebar layout on larger screens */
+            }
+
+            .bottom-nav { /* Hide bottom nav on larger screens */
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 1rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header-container {
+                position: relative;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                Finsaarthi
+            </a>
+            <button class="mobile-menu-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Services</a>
+                <a href="#" class="nav-link">Contact</a>
+                <div class="auth-buttons">
+                    <button class="btn btn-login">Login</button>
+                    <button class="btn btn-signup">Sign Up</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="grid">
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <!-- Dashboard View -->
+                <div id="dashboard-view" class="view active">
+                    <div class="grid-3">
+                        <div class="stat-card">
+                            <h3>Total Portfolio Value</h3>
+                            <p class="stat-value">₹<span id="portfolio-value">0</span></p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Monthly Savings</h3>
+                            <p class="stat-value">₹<span id="monthly-savings">0</span></p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Investment Returns</h3>
+                            <p class="stat-value"><span id="investment-returns">0</span>%</p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Portfolio Performance</h2>
+                        </div>
+                        <div class="card-content">
+                            <canvas id="portfolio-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investments View -->
+                <div id="investments-view" class="view">
+                    <h2>Investments</h2>
+                    Investments Content Here.
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-button" data-view="dashboard">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-button" data-view="investments">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20V10"/>
+                <path d="M18 20V4"/>
+                <path d="M6 20v-4"/>
+            </svg>
+            <span>Investments</span>
+        </a>
+        <a href="#" class="nav-button" data-view="goals">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+            </svg>
+            <span>Goals</span>
+        </a>
+        <a href="#" class="nav-button" data-view="budget">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>Budget</span>
+        </a>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h3>About Us</h3>
+                <p>Finsaarthi - Your Complete Financial Planning Partner.</p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: contact@finsaarthi.com</p>
+                <p>Phone: +91-8948579695</p>
+            </div>
+            <div>
+                <h3>Address</h3>
+                <p>Pune Maharashtra India </p>
+            </div>
+            <div>
+                <h3>Follow us</h3>
+                <p>Instagram/Linkdin/X</p>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+    // Mobile Menu Toggle (unchanged)
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+
+    // Bottom Navigation
+    const navButtons = document.querySelectorAll('.nav-button');
+    const views = document.querySelectorAll('.view');
+
+    navButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent page from jumping to top
+
+            // Remove active class from all buttons
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            // Hide all views
+            views.forEach(view => view.classList.remove('active'));
+
+            // Show the corresponding view
+            const viewId = button.dataset.view;
+            const viewElement = document.getElementById(viewId + '-view');
+            if (viewElement) {
+                viewElement.classList.add('active');
+            }
+        });
+    });
+
+    // Dummy Chart Data
+    const portfolioData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+            label: 'Portfolio Value',
+            data: [100000, 105000, 110000, 115000, 120000, 125000],
+            borderColor: '#2563EB',
+            backgroundColor: 'rgba(37, 99, 235, 0.2)',
+            tension: 0.4
+        }]
+    };
+
+    // Chart Initialization
+    const portfolioChartCanvas = document.getElementById('portfolio-chart');
+
+    if (portfolioChartCanvas) {
+        new Chart(portfolioChartCanvas, {
+            type: 'line',
+            data: portfolioData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    }
+
+    // Dummy Stat Card Values
+    document.getElementById('portfolio-value').innerText = '1,25,000';
+    document.getElementById('monthly-savings').innerText = '40,000';
+    document.getElementById('investment-returns').innerText = '15';
+</script>
+</body>
+  </html>
+  
